@@ -28,6 +28,7 @@ GENERATED_CONFIGFILES = \
 	pacman-extra-i686.conf \
 	pacman-testing-i686.conf \
 	pacman-staging-i686.conf \
+	pacman-staging-with-build-support-i686.conf \
 	pacman-kde-unstable-i686.conf \
 	pacman-gnome-unstable-i686.conf \
 	makepkg-i686.conf
@@ -66,6 +67,7 @@ ARCHBUILD_LINKS = \
 	testing-x86_64-build \
 	staging-i686-build \
 	staging-x86_64-build \
+	staging-with-build-support-i686-build \
 	multilib-build \
 	multilib-testing-build \
 	multilib-staging-build \

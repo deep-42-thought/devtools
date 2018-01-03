@@ -21,3 +21,4 @@ sogrep
 doc/*.1
 doc/*.7
 pacman-*-i686.conf
+makepkg-i686.conf

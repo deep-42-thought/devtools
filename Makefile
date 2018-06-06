@@ -1,4 +1,4 @@
-V=20200407
+V=$(shell git describe --exact-match)
 
 PREFIX = /usr/local
 MANDIR = $(PREFIX)/share/man
@@ -163,11 +163,11 @@ tag:
 	@git tag --sign --message "Version $(TODAY)" $(TODAY)
 
 dist:
-	git archive --format=tar --prefix=devtools-$(V)/ $(V) | gzip -9 > devtools-$(V).tar.gz
-	gpg --detach-sign --use-agent devtools-$(V).tar.gz
+	git archive --format=tar --prefix=devtools32-$(V)/ $(V) | gzip -9 > devtools32-$(V).tar.gz
+	gpg --detach-sign --use-agent devtools32-$(V).tar.gz
 
 upload:
-	scp devtools-$(V).tar.gz devtools-$(V).tar.gz.sig repos.archlinux.org:/srv/ftp/other/devtools/
+	scp devtools32-$(V).tar.gz devtools32-$(V).tar.gz.sig sources.archlinux32.org:sources/
 
 check: $(BINPROGS) bash_completion makepkg-x86_64.conf PKGBUILD.proto
 	shellcheck $^

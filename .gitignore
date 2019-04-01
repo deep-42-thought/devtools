@@ -20,3 +20,4 @@ arch-nspawn
 sogrep
 doc/*.1
 doc/*.7
+pacman-*-i686.conf

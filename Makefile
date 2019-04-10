@@ -27,18 +27,25 @@ BINPROGS = \
 GENERATED_CONFIGFILES = \
 	pacman-extra-i486.conf \
 	pacman-extra-i686.conf \
+	pacman-extra-pentium4.conf \
 	pacman-testing-i486.conf \
 	pacman-testing-i686.conf \
+	pacman-testing-pentium4.conf \
 	pacman-staging-i486.conf \
 	pacman-staging-i686.conf \
+	pacman-staging-pentium4.conf \
 	pacman-staging-with-build-support-i486.conf \
 	pacman-staging-with-build-support-i686.conf \
+	pacman-staging-with-build-support-pentium4.conf \
 	pacman-kde-unstable-i486.conf \
 	pacman-kde-unstable-i686.conf \
+	pacman-kde-unstable-pentium4.conf \
 	pacman-gnome-unstable-i486.conf \
 	pacman-gnome-unstable-i686.conf \
+	pacman-gnome-unstable-pentium4.conf \
 	makepkg-i486.conf \
-	makepkg-i686.conf
+	makepkg-i686.conf \
+	makepkg-pentium4.conf
 
 CONFIGFILES = \
 	makepkg-x86_64.conf \
@@ -53,6 +60,7 @@ CONFIGFILES = \
 	$(GENERATED_CONFIGFILES)
 
 SETARCH_ALIASES = \
+	pentium4
 
 COMMITPKG_LINKS = \
 	extrapkg \
@@ -70,23 +78,29 @@ COMMITPKG_LINKS = \
 ARCHBUILD_LINKS = \
 	extra-i486-build \
 	extra-i686-build \
+	extra-pentium4-build \
 	extra-x86_64-build \
 	testing-i486-build \
 	testing-i686-build \
+	testing-pentium4-build \
 	testing-x86_64-build \
 	staging-i486-build \
 	staging-i686-build \
+	staging-pentium4-build \
 	staging-x86_64-build \
 	staging-with-build-support-i486-build \
 	staging-with-build-support-i686-build \
+	staging-with-build-support-pentium4-build \
 	multilib-build \
 	multilib-testing-build \
 	multilib-staging-build \
 	kde-unstable-i486-build \
 	kde-unstable-i686-build \
+	kde-unstable-pentium4-build \
 	kde-unstable-x86_64-build \
 	gnome-unstable-i486-build \
 	gnome-unstable-i686-build \
+	gnome-unstable-pentium4-build \
 	gnome-unstable-x86_64-build
 
 CROSSREPOMOVE_LINKS = \
@@ -123,6 +137,10 @@ makepkg-i686.conf: makepkg-x86_64.conf
 	@echo "GEN $@"
 	@sed 's,\(["=]\)x86[-_]64\([-" ]\),\1i686\2,g' "$<" > "$@"
 
+makepkg-pentium4.conf: makepkg-i686.conf
+	@echo "GEN $@"
+	@sed '/^CHOST=/ ! s,\(["=]\)i686\([-" ]\),\1pentium4\2,g' "$<" > "$@"
+
 pacman-%-i486.conf: pacman-%.conf
 	@echo "GEN $@"
 	@sed " \
@@ -135,6 +153,13 @@ pacman-%-i686.conf: pacman-%.conf
 	@sed " \
 	s,/mirrorlist\$$,\032,; \
 	/^Architecture = / s/^.*$$/Architecture = i686/ \
+	" "$<" > "$@"
+
+pacman-%-pentium4.conf: pacman-%.conf
+	@echo "GEN $@"
+	@sed " \
+	s,/mirrorlist\$$,\032,; \
+	/^Architecture = / s/^.*$$/Architecture = pentium4/ \
 	" "$<" > "$@"
 
 %: %.in Makefile lib/common.sh

@@ -76,6 +76,12 @@ if ${clean_first} || [[ ! -d "${chroots}/${repo}-${arch}" ]]; then
 		lock 9 "$copy.lock" "Locking chroot copy '%s'" "$copy"
 
 		subvolume_delete_recursive "${copy}"
+		find "${copy}" \
+			-mindepth 1 \
+			-type d \
+			-exec mountpoint -q {} \; \
+			-prune \
+			-exec umount -l {} \;
 		rm -rf --one-file-system "${copy}"
 	done
 	lock_close 9

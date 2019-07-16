@@ -22,6 +22,8 @@ doc/*.1
 pacman-*-i486.conf
 pacman-*-i686.conf
 pacman-*-pentium4.conf
+pacman-*-armv6h.conf
+makepkg-armv6h.conf
 makepkg-i486.conf
 makepkg-i686.conf
 makepkg-pentium4.conf

@@ -25,24 +25,30 @@ BINPROGS = \
 	$(IN_PROGS)
 
 GENERATED_CONFIGFILES = \
+	pacman-extra-armv6h.conf \
 	pacman-extra-i486.conf \
 	pacman-extra-i686.conf \
 	pacman-extra-pentium4.conf \
+	pacman-testing-armv6h.conf \
 	pacman-testing-i486.conf \
 	pacman-testing-i686.conf \
 	pacman-testing-pentium4.conf \
+	pacman-staging-armv6h.conf \
 	pacman-staging-i486.conf \
 	pacman-staging-i686.conf \
 	pacman-staging-pentium4.conf \
 	pacman-staging-with-build-support-i486.conf \
 	pacman-staging-with-build-support-i686.conf \
 	pacman-staging-with-build-support-pentium4.conf \
+	pacman-kde-unstable-armv6h.conf \
 	pacman-kde-unstable-i486.conf \
 	pacman-kde-unstable-i686.conf \
 	pacman-kde-unstable-pentium4.conf \
+	pacman-gnome-unstable-armv6h.conf \
 	pacman-gnome-unstable-i486.conf \
 	pacman-gnome-unstable-i686.conf \
 	pacman-gnome-unstable-pentium4.conf \
+	makepkg-armv6h.conf \
 	makepkg-i486.conf \
 	makepkg-i686.conf \
 	makepkg-pentium4.conf
@@ -77,14 +83,17 @@ COMMITPKG_LINKS = \
 	gnome-unstablepkg
 
 ARCHBUILD_LINKS = \
+	extra-armv6h-build \
 	extra-i486-build \
 	extra-i686-build \
 	extra-pentium4-build \
 	extra-x86_64-build \
+	testing-armv6h-build \
 	testing-i486-build \
 	testing-i686-build \
 	testing-pentium4-build \
 	testing-x86_64-build \
+	staging-armv6h-build \
 	staging-i486-build \
 	staging-i686-build \
 	staging-pentium4-build \
@@ -95,10 +104,12 @@ ARCHBUILD_LINKS = \
 	multilib-build \
 	multilib-testing-build \
 	multilib-staging-build \
+	kde-unstable-armv6h-build \
 	kde-unstable-i486-build \
 	kde-unstable-i686-build \
 	kde-unstable-pentium4-build \
 	kde-unstable-x86_64-build \
+	gnome-unstable-armv6h-build \
 	gnome-unstable-i486-build \
 	gnome-unstable-i686-build \
 	gnome-unstable-pentium4-build \
@@ -129,6 +140,13 @@ man: $(MANS)
 
 edit = sed -e "s|@pkgdatadir[@]|$(PREFIX)/share/devtools|g"
 
+makepkg-armv6h.conf: makepkg-x86_64.conf
+	@echo "GEN $@"
+	@sed " s/^CARCH=.*\$$/CARCH=\"armv6h\"/g; \
+		s/^CHOST=.*\$$/CHOST=\"armv6l-unknown-linux-gnueabihf\"/g; \
+		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv6 -mfloat-abi=hard -mfpu=vfp -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
+	" "$<" > "$@"
+
 makepkg-i486.conf: makepkg-x86_64.conf
 	@echo "GEN $@"
 	@sed 's,\(["=]\)x86[-_]64\([-" ]\),\1i486\2,g' "$<" > "$@"
@@ -140,6 +158,12 @@ makepkg-i686.conf: makepkg-x86_64.conf
 makepkg-pentium4.conf: makepkg-i686.conf
 	@echo "GEN $@"
 	@sed '/^CHOST=/ ! s,\(["=]\)i686\([-" ]\),\1pentium4\2,g' "$<" > "$@"
+
+pacman-%-armv6h.conf: pacman-%.conf
+	@echo "GEN $@"
+	@sed " \
+	/^Architecture = / s/^.*\$$/Architecture = armv6h/; \
+	" "$<" > "$@"
 
 pacman-%-i486.conf: pacman-%.conf
 	@echo "GEN $@"

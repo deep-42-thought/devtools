@@ -48,6 +48,10 @@ GENERATED_CONFIGFILES = \
 	pacman-gnome-unstable-i486.conf \
 	pacman-gnome-unstable-i686.conf \
 	pacman-gnome-unstable-pentium4.conf \
+	pacman-archlinuxewe-armv6h.conf \
+	pacman-archlinuxewe-i486.conf \
+	pacman-archlinuxewe-i686.conf \
+	pacman-archlinuxewe-pentium4.conf \
 	makepkg-armv6h.conf \
 	makepkg-i486.conf \
 	makepkg-i686.conf \
@@ -63,6 +67,7 @@ CONFIGFILES = \
 	pacman-multilib-staging.conf \
 	pacman-kde-unstable.conf \
 	pacman-gnome-unstable.conf \
+	pacman-archlinuxewe.conf \
 	$(GENERATED_CONFIGFILES)
 
 SETARCH_ALIASES = \
@@ -113,7 +118,12 @@ ARCHBUILD_LINKS = \
 	gnome-unstable-i486-build \
 	gnome-unstable-i686-build \
 	gnome-unstable-pentium4-build \
-	gnome-unstable-x86_64-build
+	gnome-unstable-x86_64-build \
+	archlinuxewe-armv6h-build \
+	archlinuxewe-i486-build \
+	archlinuxewe-i686-build \
+	archlinuxewe-pentium4-build \
+	archlinuxewe-x86_64-build
 
 CROSSREPOMOVE_LINKS = \
 	extra2community \
@@ -158,6 +168,30 @@ makepkg-i686.conf: makepkg-x86_64.conf
 makepkg-pentium4.conf: makepkg-i686.conf
 	@echo "GEN $@"
 	@sed '/^CHOST=/ ! s,\(["=]\)i686\([-" ]\),\1pentium4\2,g' "$<" > "$@"
+
+pacman-archlinuxewe-i486.conf: pacman-archlinuxewe.conf
+	@echo "GEN $@"
+	@sed " \
+	s,/mirrorlist\$$,\032,; \
+	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
+	/^Architecture = / s/^.*\$$/Architecture = i486/; \
+	" "$<" > "$@"
+
+pacman-archlinuxewe-i686.conf: pacman-archlinuxewe.conf
+	@echo "GEN $@"
+	@sed " \
+	s,/mirrorlist\$$,\032,; \
+	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
+	/^Architecture = / s/^.*\$$/Architecture = i686/; \
+	" "$<" > "$@"
+
+pacman-archlinuxewe-pentium4.conf: pacman-archlinuxewe.conf
+	@echo "GEN $@"
+	@sed " \
+	s,/mirrorlist\$$,\032,; \
+	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
+	/^Architecture = / s/^.*\$$/Architecture = pentium4/; \
+	" "$<" > "$@"
 
 pacman-%-armv6h.conf: pacman-%.conf
 	@echo "GEN $@"

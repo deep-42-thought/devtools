@@ -172,7 +172,6 @@ makepkg-pentium4.conf: makepkg-i686.conf
 pacman-archlinuxewe-i486.conf: pacman-archlinuxewe.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
 	/^Architecture = / s/^.*\$$/Architecture = i486/; \
 	" "$<" > "$@"
@@ -180,7 +179,6 @@ pacman-archlinuxewe-i486.conf: pacman-archlinuxewe.conf
 pacman-archlinuxewe-i686.conf: pacman-archlinuxewe.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
 	/^Architecture = / s/^.*\$$/Architecture = i686/; \
 	" "$<" > "$@"
@@ -188,7 +186,6 @@ pacman-archlinuxewe-i686.conf: pacman-archlinuxewe.conf
 pacman-archlinuxewe-pentium4.conf: pacman-archlinuxewe.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/\[\(community-\)\?testing\]/{ N; s/#//g; }; \
 	/^Architecture = / s/^.*\$$/Architecture = pentium4/; \
 	" "$<" > "$@"
@@ -202,21 +199,18 @@ pacman-%-armv6h.conf: pacman-%.conf
 pacman-%-i486.conf: pacman-%.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/^Architecture = / s/^.*\$$/Architecture = i486/; \
 	" "$<" > "$@"
 
 pacman-%-i686.conf: pacman-%.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/^Architecture = / s/^.*$$/Architecture = i686/ \
 	" "$<" > "$@"
 
 pacman-%-pentium4.conf: pacman-%.conf
 	@echo "GEN $@"
 	@sed " \
-	s,/mirrorlist\$$,\032,; \
 	/^Architecture = / s/^.*$$/Architecture = pentium4/ \
 	" "$<" > "$@"
 

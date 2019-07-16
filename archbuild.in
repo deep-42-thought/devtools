@@ -13,6 +13,9 @@ if [[ "${cmd%%-*}" == 'multilib' ]]; then
 	arch='x86_64'
 	base_packages+=(multilib-devel)
 else
+	if [[ "${cmd%%-*}" == 'archlinuxewe' ]]; then
+		base_packages+=(local-certificates)
+	fi
 	tag="${cmd%-build}"
 	repo=${tag%-*}
 	arch=${tag##*-}

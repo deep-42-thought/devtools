@@ -182,6 +182,7 @@ makepkg-aarch64.conf: makepkg-x86_64.conf
 	@sed " s/^CARCH=.*\$$/CARCH=\"aarch64\"/g; \
 		s/^CHOST=.*\$$/CHOST=\"aarch64-unknown-linux-gnu\"/g; \
 		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv8-a -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
+		s/^PKGEXT=.*$$/PKGEXT='.pkg.tar'/; \
 	" "$<" > "$@"
 
 makepkg-armv6h.conf: makepkg-x86_64.conf
@@ -189,6 +190,7 @@ makepkg-armv6h.conf: makepkg-x86_64.conf
 	@sed " s/^CARCH=.*\$$/CARCH=\"armv6h\"/g; \
 		s/^CHOST=.*\$$/CHOST=\"armv6l-unknown-linux-gnueabihf\"/g; \
 		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv6 -mfloat-abi=hard -mfpu=vfp -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
+		s/^PKGEXT=.*$$/PKGEXT='.pkg.tar'/; \
 	" "$<" > "$@"
 
 makepkg-armv7h.conf: makepkg-x86_64.conf
@@ -196,6 +198,7 @@ makepkg-armv7h.conf: makepkg-x86_64.conf
 	@sed " s/^CARCH=.*\$$/CARCH=\"armv7h\"/g; \
 		s/^CHOST=.*\$$/CHOST=\"armv7l-unknown-linux-gnueabihf\"/g; \
 		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
+		s/^PKGEXT=.*$$/PKGEXT='.pkg.tar'/; \
 	" "$<" > "$@"
 
 makepkg-i486.conf: makepkg-x86_64.conf

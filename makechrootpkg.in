@@ -178,6 +178,9 @@ prepare_chroot() {
 		grep -q "^$x" "$copydir/etc/makepkg.conf" && continue
 		echo "$x" >>"$copydir/etc/makepkg.conf"
 	done
+	if [ -n "${PKGEXT}" ]; then
+		sed -i 's/^PKGEXT=.*/PKGEXT='"'${PKGEXT}'"'/' "$copydir/etc/makepkg.conf"
+	fi
 
 	cat > "$copydir/etc/sudoers.d/builduser-pacman" <<EOF
 builduser ALL = NOPASSWD: /usr/bin/pacman
@@ -327,6 +330,7 @@ done
 umask 0022
 
 ORIG_HOME=$HOME
+PKGEXT=$PKGEXT
 IFS=: read -r _ _ _ _ _ HOME _ < <(getent passwd "${SUDO_USER:-$USER}")
 load_makepkg_config
 HOME=$ORIG_HOME

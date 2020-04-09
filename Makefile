@@ -26,14 +26,17 @@ BINPROGS = \
 
 GENERATED_CONFIGFILES = \
 	pacman-extra-armv6h.conf \
+	pacman-extra-armv7h.conf \
 	pacman-extra-i486.conf \
 	pacman-extra-i686.conf \
 	pacman-extra-pentium4.conf \
 	pacman-testing-armv6h.conf \
+	pacman-testing-armv7h.conf \
 	pacman-testing-i486.conf \
 	pacman-testing-i686.conf \
 	pacman-testing-pentium4.conf \
 	pacman-staging-armv6h.conf \
+	pacman-staging-armv7h.conf \
 	pacman-staging-i486.conf \
 	pacman-staging-i686.conf \
 	pacman-staging-pentium4.conf \
@@ -41,18 +44,22 @@ GENERATED_CONFIGFILES = \
 	pacman-staging-with-build-support-i686.conf \
 	pacman-staging-with-build-support-pentium4.conf \
 	pacman-kde-unstable-armv6h.conf \
+	pacman-kde-unstable-armv7h.conf \
 	pacman-kde-unstable-i486.conf \
 	pacman-kde-unstable-i686.conf \
 	pacman-kde-unstable-pentium4.conf \
 	pacman-gnome-unstable-armv6h.conf \
+	pacman-gnome-unstable-armv7h.conf \
 	pacman-gnome-unstable-i486.conf \
 	pacman-gnome-unstable-i686.conf \
 	pacman-gnome-unstable-pentium4.conf \
 	pacman-archlinuxewe-armv6h.conf \
+	pacman-archlinuxewe-armv7h.conf \
 	pacman-archlinuxewe-i486.conf \
 	pacman-archlinuxewe-i686.conf \
 	pacman-archlinuxewe-pentium4.conf \
 	makepkg-armv6h.conf \
+	makepkg-armv7h.conf \
 	makepkg-i486.conf \
 	makepkg-i686.conf \
 	makepkg-pentium4.conf
@@ -72,6 +79,7 @@ CONFIGFILES = \
 
 SETARCH_ALIASES = \
 	armv6h \
+	armv7h \
 	pentium4
 
 COMMITPKG_LINKS = \
@@ -89,16 +97,19 @@ COMMITPKG_LINKS = \
 
 ARCHBUILD_LINKS = \
 	extra-armv6h-build \
+	extra-armv7h-build \
 	extra-i486-build \
 	extra-i686-build \
 	extra-pentium4-build \
 	extra-x86_64-build \
 	testing-armv6h-build \
+	testing-armv7h-build \
 	testing-i486-build \
 	testing-i686-build \
 	testing-pentium4-build \
 	testing-x86_64-build \
 	staging-armv6h-build \
+	staging-armv7h-build \
 	staging-i486-build \
 	staging-i686-build \
 	staging-pentium4-build \
@@ -110,16 +121,19 @@ ARCHBUILD_LINKS = \
 	multilib-testing-build \
 	multilib-staging-build \
 	kde-unstable-armv6h-build \
+	kde-unstable-armv7h-build \
 	kde-unstable-i486-build \
 	kde-unstable-i686-build \
 	kde-unstable-pentium4-build \
 	kde-unstable-x86_64-build \
 	gnome-unstable-armv6h-build \
+	gnome-unstable-armv7h-build \
 	gnome-unstable-i486-build \
 	gnome-unstable-i686-build \
 	gnome-unstable-pentium4-build \
 	gnome-unstable-x86_64-build \
 	archlinuxewe-armv6h-build \
+	archlinuxewe-armv7h-build \
 	archlinuxewe-i486-build \
 	archlinuxewe-i686-build \
 	archlinuxewe-pentium4-build \
@@ -155,6 +169,13 @@ makepkg-armv6h.conf: makepkg-x86_64.conf
 	@sed " s/^CARCH=.*\$$/CARCH=\"armv6h\"/g; \
 		s/^CHOST=.*\$$/CHOST=\"armv6l-unknown-linux-gnueabihf\"/g; \
 		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv6 -mfloat-abi=hard -mfpu=vfp -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
+	" "$<" > "$@"
+
+makepkg-armv7h.conf: makepkg-x86_64.conf
+	@echo "GEN $@"
+	@sed " s/^CARCH=.*\$$/CARCH=\"armv7h\"/g; \
+		s/^CHOST=.*\$$/CHOST=\"armv7l-unknown-linux-gnueabihf\"/g; \
+		s/^\(C\(XX\)\?FLAGS=\).*\$$/\1\"-march=armv7-a -mfloat-abi=hard -mfpu=vfpv3-d16 -O2 -pipe -fstack-protector-strong -fno-plt\"/g; \
 	" "$<" > "$@"
 
 makepkg-i486.conf: makepkg-x86_64.conf
@@ -194,6 +215,12 @@ pacman-%-armv6h.conf: pacman-%.conf
 	@echo "GEN $@"
 	@sed " \
 	/^Architecture = / s/^.*\$$/Architecture = armv6h/; \
+	" "$<" > "$@"
+
+pacman-%-armv7h.conf: pacman-%.conf
+	@echo "GEN $@"
+	@sed " \
+	/^Architecture = / s/^.*\$$/Architecture = armv7h/; \
 	" "$<" > "$@"
 
 pacman-%-i486.conf: pacman-%.conf
